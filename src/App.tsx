@@ -95,12 +95,21 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   
-  const [books, setBooks] = useState<Book[]>(DEFAULT_BOOKS);
-  const [activeBookId, setActiveBookId] = useState<string>(DEFAULT_BOOKS[0].id);
+  const [books, setBooks] = useState<Book[]>(() => {
+    const saved = localStorage.getItem('lumina_books');
+    return saved ? JSON.parse(saved) : DEFAULT_BOOKS;
+  });
+  const [activeBookId, setActiveBookId] = useState<string>(() => {
+    const saved = localStorage.getItem('lumina_active_book_id');
+    return saved && saved !== 'undefined' ? saved : DEFAULT_BOOKS[0].id;
+  });
   const [showSettings, setShowSettings] = useState(false);
   const [newBookTile, setNewBookTitle] = useState('');
   const [newBookContext, setNewBookContext] = useState('');
-  const [discussedTopics, setDiscussedTopics] = useState<string[]>([]);
+  const [discussedTopics, setDiscussedTopics] = useState<string[]>(() => {
+    const saved = localStorage.getItem('lumina_discussed_topics');
+    return saved ? JSON.parse(saved) : [];
+  });
   
   const [explainingWord, setExplainingWord] = useState<string | null>(null);
   const [explanation, setExplanation] = useState<string | null>(null);
@@ -111,6 +120,19 @@ export default function App() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const activeBook = books.find(b => b.id === activeBookId) || books[0];
+
+  // Persist State
+  useEffect(() => {
+    localStorage.setItem('lumina_books', JSON.stringify(books));
+  }, [books]);
+
+  useEffect(() => {
+    localStorage.setItem('lumina_active_book_id', activeBookId);
+  }, [activeBookId]);
+
+  useEffect(() => {
+    localStorage.setItem('lumina_discussed_topics', JSON.stringify(discussedTopics));
+  }, [discussedTopics]);
 
   // Initialize Chat
   useEffect(() => {
