@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Helvetica Neue", "Arial", sans-serif;
+  --font-serif: "Georgia", serif;
+  
+  --color-paper: #FDFCFB;
+  --color-macaron-pink: #FFDDE2;
+  --color-macaron-blue: #D7E9F7;
+  --color-macaron-mint: #E1F8DC;
+  --color-macaron-yellow: #FAF4B7;
+  --color-macaron-purple: #F3E9DD;
+  --color-macaron-lavender: #E4DFFD;
+  
+  --color-ink: #333333;
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-black font-sans antialiased;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Lumina",
+  "description": "Speak your mind. Lumina lights the page.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["AI Chat", "Voice Interaction", "Educational Tools"]
+}
