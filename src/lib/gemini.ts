@@ -6,7 +6,7 @@ const ai = new GoogleGenAI({
 
 export const getGeminiChat = (systemInstruction: string) => {
   return ai.chats.create({
-    model: "gemini-3-flash-preview",
+    model: "gemini-3.1-pro-preview",
     config: {
       systemInstruction,
     }

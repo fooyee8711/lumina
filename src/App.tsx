@@ -136,9 +136,13 @@ export default function App() {
 
   // Initialize Chat
   useEffect(() => {
-    const discussedString = discussedTopics.length > 0 ? `\n\nALREADY DISCUSSED TOPICS (Avoid these or find new angles): ${discussedTopics.join(', ')}` : '';
-    chatRef.current = getGeminiChat(`${SYSTEM_INSTRUCTION}${discussedString}\n\nCurrent Context: We are discussing the book "${activeBook.title}". ${activeBook.context}`);
-  }, [activeBookId, books, discussedTopics]);
+    // Only re-initialize when the literal book content or ID changes
+    // Removed discussedTopics dependency to prevent wiping chat history and re-sending large context
+    chatRef.current = getGeminiChat(`${SYSTEM_INSTRUCTION}\n\nCurrent Context: We are discussing the book "${activeBook.title}". ${activeBook.context}`);
+    
+    // If we have local discussed topics, we could inform the AI in the first message if history was supported here,
+    // but the AI will naturally know from the ongoing chat history.
+  }, [activeBookId, activeBook.context]);
 
   // Scroll to bottom
   useEffect(() => {
